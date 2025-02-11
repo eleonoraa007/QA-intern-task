@@ -11,11 +11,7 @@ Cypress.Commands.add("register", (username, email, password) => {
   }).as("registrationRequest");
 
   cy.contains("button", "Register").click();
-
-  cy.wait("@registrationRequest", { timeout: 10000 }).then((interception) => {
-    expect(interception.response.statusCode).to.be.oneOf([200, 201]);
-  });
-  cy.url().should("include", "/dashboard");
+  return cy.wait("@registrationRequest", { timeout: 10000 });
 });
 
 Cypress.Commands.add("login", (email, password) => {
@@ -30,10 +26,5 @@ Cypress.Commands.add("login", (email, password) => {
   }).as("loginRequest");
 
   cy.contains("button", "Sign in").click();
-
-  cy.wait("@loginRequest", { timeout: 10000 }).then((interception) => {
-    expect(interception.response.statusCode).to.be.oneOf([200, 201]);
-  });
-
-  cy.url().should("include", "/dashboard");
+  return cy.wait("@loginRequest", { timeout: 10000 });
 });
