@@ -22,3 +22,8 @@ it("shows error with incorrect password", () => {
     expect(interception.response.statusCode).to.eq(401);
   });
 });
+it("fails with non-existent email", () => {
+  cy.login("example@example.com", "password123").then((interception) => {
+    expect(interception.response.statusCode).to.eq(401);
+  });
+});
