@@ -1,6 +1,11 @@
-describe("Register Test", () => {
-  it("should visit the register page", () => {
-    cy.visit("https://automaticityacademy.ngrok.app/");
-    cy.contains("Register").click();
+describe("User Registration", () => {
+  const newUser = {
+    username: "test1",
+    email: "test1@example.com",
+    password: "password1",
+  };
+
+  it("successfully registered user", () => {
+    cy.register(newUser.username, newUser.email, newUser.password);
   });
 });

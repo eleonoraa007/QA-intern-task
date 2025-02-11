@@ -1,6 +1,9 @@
-describe("Login Test", () => {
-  it("should visit the login page", () => {
-    cy.visit("https://automaticityacademy.ngrok.app/");
-    cy.contains("Log in").click();
+describe("User Login", () => {
+  it("successfully logs in with valid credentials", () => {
+    const validUser = {
+      email: "testUser1@example.com",
+      password: "passwordUser1",
+    };
+    cy.login(validUser.email, validUser.password);
   });
 });
