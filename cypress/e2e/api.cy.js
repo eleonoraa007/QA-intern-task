@@ -40,4 +40,27 @@ describe("API Tests", () => {
       }
     );
   });
+
+  it("GET products filtered by search", () => {
+    cy.intercept("GET", "**/api/v1/products/?search=*").as("productsRequest");
+
+    cy.reload();
+
+    cy.login("testUser1@example.com", "passwordUser1");
+
+    cy.wait("@productsRequest", { timeout: 10000 }).then((interception) => {
+      expect(interception.response.statusCode).to.eq(200);
+    });
+
+    cy.intercept("GET", "**/api/v1/products/**").as("searchRequest");
+
+    cy.get("#search").type("A");
+    cy.get("#search").type("M");
+    cy.get("#search").type("D");
+
+    cy.wait("@searchRequest", { timeout: 10000 }).then((interception) => {
+      console.log("Request URL:", interception.request.url);
+      expect(interception.response.statusCode).to.eq(200);
+    });
+  });
 });
