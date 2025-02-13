@@ -64,7 +64,7 @@ describe("API Tests", () => {
     });
   });
 
-  it("GET product into cart", () => {
+  it("Add product into cart", () => {
     cy.intercept("GET", "**/api/v1/products/?search=*").as("productsRequest");
 
     cy.reload();
@@ -75,9 +75,11 @@ describe("API Tests", () => {
       expect(interception.response.statusCode).to.eq(200);
     });
 
-    cy.intercept("GET", "**/api/v1/products/**").as("addToCart");
+    // cy.intercept("GET", "**/api/v1/products/**").as("addToCart");
+    cy.intercept("POST", "**/api/v1/cart/**").as("addToCart");
 
-    cy.get(".p-tooltip-target-wrapper").first().click();
+    // cy.get(".p-tooltip-target-wrapper").first().click();
+    cy.get("[class='px-1 ml-auto p-button p-component']").first().click();
 
     cy.wait("@addToCart", { timeout: 10000 }).then((interception) => {
       console.log("Request URL:", interception.request.url);
