@@ -1,13 +1,11 @@
 describe("User Login", () => {
   it("successfully logs in with valid credentials", () => {
-    const validUser = {
-      email: "testUser1@example.com",
-      password: "passwordUser1",
-    };
-    cy.login(validUser.email, validUser.password).then((interception) => {
-      expect(interception.response.statusCode).to.be.oneOf([200, 201]);
-      cy.url().should("include", "/dashboard");
-    });
+    cy.login(Cypress.env("email"), Cypress.env("password")).then(
+      (interception) => {
+        expect(interception.response.statusCode).to.be.oneOf([200, 201]);
+        cy.url().should("include", "/dashboard");
+      }
+    );
   });
 });
 

@@ -47,7 +47,6 @@ describe("E2E Tests", () => {
     );
 
     // Add product to cart
-    // cy.intercept("GET", "**/api/v1/products/**").as("addToCart");
     cy.intercept("POST", "**/api/v1/cart/**").as("addToCart");
 
     cy.get("[class='px-1 ml-auto p-button p-component']").first().click();

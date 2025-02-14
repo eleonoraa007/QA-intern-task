@@ -43,6 +43,7 @@ describe("Cover flow of shopping new product from the store", () => {
       console.log("Request URL:", interception.request.url);
       expect(interception.response.statusCode).to.eq(200);
     });
+
     //Checkout
     cy.get(
       ".inline-flex.items-center.py-2.border.border-transparent.text-sm.leading-4.font-medium.rounded-md.text-primary.hover\\:text-gray-600.focus\\:outline-none.transition.ease-in-out.duration-150.p-button.p-component"

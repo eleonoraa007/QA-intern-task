@@ -1,13 +1,10 @@
 describe("API Tests", () => {
   it("GET all products", () => {
-    cy.intercept({
-      method: "GET",
-      url: "**/products*",
-    }).as("productsRequest");
+    cy.intercept("GET", "**/api/v1/products/?search=*").as("productsRequest");
 
-    cy.login("testUser1@example.com", "passwordUser1").then((interception) => {
-      expect(interception.response.statusCode).to.be.oneOf([200, 201]);
-    });
+    cy.reload();
+
+    cy.login(Cypress.env("email"), Cypress.env("password"));
 
     cy.visit("/dashboard");
 
@@ -23,7 +20,7 @@ describe("API Tests", () => {
 
     cy.reload();
 
-    cy.login("testUser1@example.com", "passwordUser1");
+    cy.login(Cypress.env("email"), Cypress.env("password"));
 
     cy.wait("@productsRequest", { timeout: 10000 }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
@@ -46,7 +43,7 @@ describe("API Tests", () => {
 
     cy.reload();
 
-    cy.login("testUser1@example.com", "passwordUser1");
+    cy.login(Cypress.env("email"), Cypress.env("password"));
 
     cy.wait("@productsRequest", { timeout: 10000 }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
@@ -69,21 +66,36 @@ describe("API Tests", () => {
 
     cy.reload();
 
-    cy.login("testUser1@example.com", "passwordUser1");
+    cy.login(Cypress.env("email"), Cypress.env("password"));
 
     cy.wait("@productsRequest", { timeout: 10000 }).then((interception) => {
       expect(interception.response.statusCode).to.eq(200);
     });
 
-    // cy.intercept("GET", "**/api/v1/products/**").as("addToCart");
     cy.intercept("POST", "**/api/v1/cart/**").as("addToCart");
 
-    // cy.get(".p-tooltip-target-wrapper").first().click();
-    cy.get("[class='px-1 ml-auto p-button p-component']").first().click();
+    cy.get("[class='px-1 ml-auto p-button p-component']").eq(1).click();
 
     cy.wait("@addToCart", { timeout: 10000 }).then((interception) => {
       console.log("Request URL:", interception.request.url);
       expect(interception.response.statusCode).to.eq(200);
     });
+  });
+
+  it("Removes all the products from the cart", () => {
+    cy.intercept("GET", "**/api/v1/products/?search=*").as("productsRequest");
+
+    cy.reload();
+
+    cy.login(Cypress.env("email"), Cypress.env("password"));
+
+    cy.wait("@productsRequest", { timeout: 10000 }).then((interception) => {
+      expect(interception.response.statusCode).to.eq(200);
+    });
+
+    cy.get(
+      ".inline-flex.items-center.py-2.border.border-transparent.text-sm.leading-4.font-medium.rounded-md.text-primary.hover\\:text-gray-600.focus\\:outline-none.transition.ease-in-out.duration-150.p-button.p-component"
+    ).click();
+    cy.contains("Clear").click();
   });
 });
