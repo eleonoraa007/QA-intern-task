@@ -4,7 +4,7 @@ This repository contains automated tests for an e-commerce platform using Cypres
 
 ## Test Scenarios
 
-### Login Test
+### Login Tests
 
 **Positive Case**
   - Successful login with valid credentials
@@ -16,7 +16,7 @@ This repository contains automated tests for an e-commerce platform using Cypres
 
 
 
-### Register Test
+### Register Tests
 
 **Positive Case**
   - Successful user registration with valid data
