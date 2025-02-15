@@ -55,7 +55,7 @@ This repository contains automated tests for an e-commerce platform using Cypres
   *npm install*
 
 2. Install Cypress:
-  *npm install cypress --save-dev*
+  *npx cypress install*
 
 ### Running Tests
 
